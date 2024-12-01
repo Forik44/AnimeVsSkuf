@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,8 +9,10 @@ namespace DI
         protected DIContainer Container { get; }
         protected bool IsSingleton { get; set; }
 
-        protected DIEntry() { }
-            
+        protected DIEntry()
+        {
+        }
+
         protected DIEntry(DIContainer container)
         {
             Container = container;
@@ -77,4 +80,5 @@ namespace DI
         {
             _disposableInstance?.Dispose();
         }
+    }
 }

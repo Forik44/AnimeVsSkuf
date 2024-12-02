@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using AnimeVsSkuf.Scripts.Game.Gameplay.Root;
 using Game.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -42,6 +41,12 @@ namespace Game
                 _coroutines.StartCoroutine(LoadAndStartGameplay());
                 return;
             }
+            
+            if (sceneName == Scenes.MAIN_MENU)
+            {
+                _coroutines.StartCoroutine(LoadAndStartMainMenu());
+                return;
+            }
 
             if (sceneName != Scenes.BOOT)
             {
@@ -58,10 +63,37 @@ namespace Game
             yield return LoadScene(Scenes.BOOT);
             yield return LoadScene(Scenes.GAMEPLAY);
             yield return new WaitForSeconds(2);
-
+ 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
-            sceneEntryPoint.Run();
+            sceneEntryPoint.Run(_uiRoot);
+            
+            //TODO: Переделать под реативщину
+            sceneEntryPoint.GoToMainMenuSceneRequested += () =>
+            {
+                _coroutines.StartCoroutine(LoadAndStartMainMenu());
+            };
 
+            _uiRoot.HideLoadingScreen();
+        }
+        
+        private IEnumerator LoadAndStartMainMenu()
+        {
+            _uiRoot.ShowLoadingScreen();
+
+            yield return LoadScene(Scenes.BOOT);
+            yield return LoadScene(Scenes.MAIN_MENU);
+            yield return new WaitForSeconds(2);
+ 
+            var sceneEntryPoint = Object.FindFirstObjectByType<MainMenuEntryPoint>();
+            sceneEntryPoint.Run(_uiRoot);
+            
+            //TODO: Переделать под реативщину
+            sceneEntryPoint.GoToGameplaySceneRequested += () =>
+            {
+                _coroutines.StartCoroutine(LoadAndStartGameplay());
+            };
+
+            
             _uiRoot.HideLoadingScreen();
         }
 

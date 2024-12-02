@@ -1,14 +1,23 @@
 using UnityEngine;
+using System;
 
-namespace AnimeVsSkuf.Scripts.Game.Gameplay.Root
+namespace Game
 {
     public class GameplayEntryPoint : MonoBehaviour
     {
-        [SerializeField] private GameObject _sceneRootBinder;
+        public event Action GoToMainMenuSceneRequested;
+        
+        [SerializeField] private UIGameplayRootBinder _sceneUIRootPrefab;
 
-        public void Run()
+        public void Run(UIRootView uiRoot)
         {
-            Debug.Log("Gameplay scene loaded");
+            var uiScene = Instantiate(_sceneUIRootPrefab);
+            uiRoot.AttachSceneUI(uiScene.gameObject);
+
+            uiScene.GoToMainMenuButtonClicked += () =>
+            {
+                GoToMainMenuSceneRequested.Invoke();
+            };
         }
     }
 }

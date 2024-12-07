@@ -1,24 +1,32 @@
 using System;
 using System.Collections.Generic;
+using R3;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
     public class MainMenuEntryPoint : MonoBehaviour
     {
-        public event Action GoToGameplaySceneRequested;
-        
         [SerializeField] private UIMainMenuRootBinder _sceneUIRootPrefab;
 
-        public void Run(UIRootView uiRoot)
+        public Observable<MainMenuExitParams> Run(UIRootView uiRoot, MainMenuEnterParams enterParams)
         {
             var uiScene = Instantiate(_sceneUIRootPrefab);
             uiRoot.AttachSceneUI(uiScene.gameObject);
 
-            uiScene.GoToGameplayButtonClicked += () =>
-            {
-                GoToGameplaySceneRequested.Invoke();
-            };
+            var exitSignalSubject = new Subject<Unit>();
+            uiScene.Bind(exitSignalSubject);
+            
+            Debug.Log($"MAIN MENU ENTRY POINT: Run main menu scene. Results: {enterParams?.Result}");
+        
+            var gameplayEnterParams = new GameplayEnterParams(3);
+            var mainMenuExitParams = new MainMenuExitParams(gameplayEnterParams);
+            var exitToGameplaySceneSignal = exitSignalSubject.Select(_ => mainMenuExitParams);
+
+            //если добавлять сцены то тут надо замёржить сигнал
+            
+            return exitToGameplaySceneSignal;
         }
     }
 }

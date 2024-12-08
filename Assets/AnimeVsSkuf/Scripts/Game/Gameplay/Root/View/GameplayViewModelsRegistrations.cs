@@ -6,7 +6,7 @@ namespace Game
     {
         public static void Register(DIContainer container)
         {
-
+            container.RegisterFactory(c => new UIGameplayRootViewModel()).AsSingle();
         }
     }
 }

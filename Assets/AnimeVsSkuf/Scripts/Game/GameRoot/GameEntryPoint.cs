@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using DI;
+using Game.State;
 using Game.Utils;
 using R3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Game
 {
@@ -34,6 +37,9 @@ namespace Game
             _uiRoot = Object.Instantiate(prefabUIRoot);
             Object.DontDestroyOnLoad(_uiRoot.gameObject);
             _rootContainer.RegisterInstance(_uiRoot);
+
+            var gameStateProvider = new PlayerPrefsGameStateProvider();
+            _rootContainer.RegisterInstance<IGameStateProvider>(gameStateProvider);
         }
         private void RunGame()
         {
@@ -69,6 +75,10 @@ namespace Game
             yield return LoadScene(Scenes.BOOT);
             yield return LoadScene(Scenes.GAMEPLAY);
             yield return new WaitForSeconds(1);
+            
+            var isGameStateLoaded = false;
+            _rootContainer.Resolve<IGameStateProvider>().LoadGameState().Subscribe(_ => isGameStateLoaded = true);
+            yield return new WaitUntill(() => isGameStateLoaded);
  
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
             var gameplayContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
@@ -111,6 +121,14 @@ namespace Game
         private IEnumerator LoadScene(string sceneName)
         {
             yield return SceneManager.LoadSceneAsync(sceneName);
+        }
+    }
+
+    internal class WaitUntill
+    {
+        public WaitUntill(Func<bool> func)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Game.State
     [Serializable]
     public class GameState
     {
+        public int PlayerEntityId;
         public List<PlayerEntity> Players;
     }
 }

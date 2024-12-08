@@ -78,7 +78,7 @@ namespace Game
             
             var isGameStateLoaded = false;
             _rootContainer.Resolve<IGameStateProvider>().LoadGameState().Subscribe(_ => isGameStateLoaded = true);
-            yield return new WaitUntill(() => isGameStateLoaded);
+            yield return new WaitUntil(() => isGameStateLoaded);
  
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
             var gameplayContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
@@ -121,14 +121,6 @@ namespace Game
         private IEnumerator LoadScene(string sceneName)
         {
             yield return SceneManager.LoadSceneAsync(sceneName);
-        }
-    }
-
-    internal class WaitUntill
-    {
-        public WaitUntill(Func<bool> func)
-        {
-            throw new NotImplementedException();
         }
     }
 }

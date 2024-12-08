@@ -7,6 +7,8 @@ namespace Game.State
         public int Id { get; }
         public ReactiveProperty<string> Name { get; }
         public ReactiveProperty<int> Level { get; }
+        
+        public PlayerEntity Origin { get; }
 
         public PlayerEntityProxy(PlayerEntity playerEntity)
         {
@@ -14,6 +16,8 @@ namespace Game.State
             
             Name = new ReactiveProperty<string>(playerEntity.Name);
             Level = new ReactiveProperty<int>(playerEntity.Level);
+            
+            Origin = playerEntity;
             
             Name.Skip(1).Subscribe(value => playerEntity.Name = value);
             Level.Skip(1).Subscribe(value => playerEntity.Level = value);

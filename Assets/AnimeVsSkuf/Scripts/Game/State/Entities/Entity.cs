@@ -3,10 +3,8 @@ using System;
 namespace Game.State
 {
     [Serializable]
-    public class PlayerEntity
+    public class Entity
     {
         public int Id;
-        public string Name;
-        public int Level;
     }
 }

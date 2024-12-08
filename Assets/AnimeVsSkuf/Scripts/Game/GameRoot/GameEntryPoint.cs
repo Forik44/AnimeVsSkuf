@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using DI;
 using Game.Utils;
 using R3;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +12,9 @@ namespace Game
         private static GameEntryPoint _instance;
         private Coroutines _coroutines;
         private UIRootView _uiRoot;
+        private readonly DIContainer _rootContainer = new DIContainer();
+        private DIContainer _cachedSceneContainer;
+        
     
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void AutoStartGame()
@@ -31,6 +33,7 @@ namespace Game
             var prefabUIRoot = Resources.Load<UIRootView>("UIRoot");
             _uiRoot = Object.Instantiate(prefabUIRoot);
             Object.DontDestroyOnLoad(_uiRoot.gameObject);
+            _rootContainer.RegisterInstance(_uiRoot);
         }
         private void RunGame()
         {
@@ -61,13 +64,15 @@ namespace Game
         private IEnumerator LoadAndStartGameplay(GameplayEnterParams enterParams)
         {
             _uiRoot.ShowLoadingScreen();
+            _cachedSceneContainer?.Dispose();
 
             yield return LoadScene(Scenes.BOOT);
             yield return LoadScene(Scenes.GAMEPLAY);
             yield return new WaitForSeconds(1);
  
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
-            sceneEntryPoint.Run(_uiRoot, enterParams).Subscribe(gameplayExitParams =>
+            var gameplayContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
+            sceneEntryPoint.Run(gameplayContainer, enterParams).Subscribe(gameplayExitParams =>
             {
                 var targetSceneName = gameplayExitParams.TargetSceneEnterParams.SceneName;
 
@@ -89,7 +94,8 @@ namespace Game
             yield return new WaitForSeconds(1);
  
             var sceneEntryPoint = Object.FindFirstObjectByType<MainMenuEntryPoint>();
-            sceneEntryPoint.Run(_uiRoot, enterParams).Subscribe(mainMenuExitParams =>
+            var mainMenuContainer = _cachedSceneContainer = new DIContainer(_rootContainer);
+            sceneEntryPoint.Run(mainMenuContainer, enterParams).Subscribe(mainMenuExitParams =>
             {
                 var targetSceneName = mainMenuExitParams.TargetSceneEnterParams.SceneName;
 

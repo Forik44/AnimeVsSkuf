@@ -58,11 +58,13 @@ namespace Game.State
                 {
                     new()
                     {
+                        Id = 0,
                         Name = "Egor",
                         Level = 4
                     },
                     new()
                     {
+                        Id = 1,
                         Name = "Leonardo",
                         Level = 3
                     }

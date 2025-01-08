@@ -22,7 +22,7 @@ namespace Game
             uiRoot.AttachSceneUI(uiScene.gameObject);
 
             var exitSignalSubject = new Subject<Unit>();
-            uiScene.Bind(exitSignalSubject);
+            uiScene.Bind(exitSignalSubject, mainMenuViewModelsContainer.Resolve<UIMainMenuRootViewModel>());
             
             Debug.Log($"MAIN MENU ENTRY POINT: Run main menu scene. Results: {enterParams?.Result}");
         

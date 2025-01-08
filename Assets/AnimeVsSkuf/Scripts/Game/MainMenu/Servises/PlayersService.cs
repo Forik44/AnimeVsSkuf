@@ -11,7 +11,7 @@ namespace Game.MainMenu
     public class PlayersService
     {
         private readonly ICommandProcessor _cmd;
-        private readonly ObservableList<PlayerViewModel> _allPlayers;
+        private readonly ObservableList<PlayerViewModel> _allPlayers = new();
         private readonly Dictionary<int, PlayerViewModel> _playersMap = new();
 
         public IObservableCollection<PlayerViewModel> AllPlayers => _allPlayers;

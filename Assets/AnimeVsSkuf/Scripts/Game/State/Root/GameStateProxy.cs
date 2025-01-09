@@ -29,9 +29,9 @@ namespace Game.State
             });
         }
 
-        public int GetPlayerId()
+        public int CreatePlayerId()
         {
-            return _gameState.PlayerEntityId++;
+            return _gameState.CreatePlayerId();
         }
     }
 }

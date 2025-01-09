@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AnimeVsSkuf.Scripts.Game.Settings;
 using Game.Gameplay;
 using Game.State;
@@ -55,7 +56,7 @@ namespace Game.MainMenu
 
         private void CreatePlayerViewModel(PlayerEntityProxy playerEntity)
         {
-            var defaultName = _gameSettings.Constants.Find(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName));
+            var defaultName = _gameSettings.Constants.FirstOrDefault(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName));
             var playerViewModel = new PlayerViewModel(playerEntity, defaultName.Value ,this);
             
             _allPlayers.Add(playerViewModel);

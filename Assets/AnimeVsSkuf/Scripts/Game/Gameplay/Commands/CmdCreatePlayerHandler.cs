@@ -13,7 +13,7 @@ namespace Game.Gameplay
         }
         public bool Handle(CmdCreatePlayer command)
         {
-            var playerId = _gameState.GetPlayerId();
+            var playerId = _gameState.CreatePlayerId();
             var newPlayerEntity = new PlayerEntity
             {
                 Id = playerId,

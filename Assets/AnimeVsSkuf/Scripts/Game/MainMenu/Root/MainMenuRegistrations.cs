@@ -1,3 +1,4 @@
+using AnimeVsSkuf.Scripts.Game.Settings;
 using DI;
 using Game.Gameplay;
 using Game.MainMenu;
@@ -10,6 +11,9 @@ namespace Game
     {
         public static void Register(DIContainer container, MainMenuEnterParams mainMenuEnterParams)
         {
+            var gameSettingsProvider = container.Resolve<GameSettingsProvider>();
+            var gameSettings = gameSettingsProvider.GameSettings;
+            
             var gameStateProvider = container.Resolve<IGameStateProvider>();
             var gameState = gameStateProvider.GameState;
 
@@ -17,7 +21,7 @@ namespace Game
             cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState));
             container.RegisterInstance<ICommandProcessor>(cmd);
             
-            container.RegisterFactory(_ => new PlayersService(gameState.Players, cmd)).AsSingle();
+            container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd)).AsSingle();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using AnimeVsSkuf.Scripts.Game.Settings;
 using DI;
 using Game.State;
 using Game.Utils;
@@ -40,6 +41,10 @@ namespace Game
 
             var gameStateProvider = new PlayerPrefsGameStateProvider();
             _rootContainer.RegisterInstance<IGameStateProvider>(gameStateProvider);
+            
+            var gameSettingsProvider = new GameSettingsProvider();
+            gameSettingsProvider.LoadGameSettings();
+            _rootContainer.RegisterInstance<GameSettingsProvider>(gameSettingsProvider);
         }
         private void RunGame()
         {

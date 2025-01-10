@@ -15,15 +15,17 @@ namespace Game.MainMenu
     {
         private readonly GameSettings _gameSettings;
         private readonly ICommandProcessor _cmd;
+        private readonly Subject<PlayerEntityProxy> _exitSceneRequest;
         private readonly ObservableList<PlayerViewModel> _allPlayers = new();
         private readonly Dictionary<int, PlayerViewModel> _playersMap = new();
 
         public IObservableCollection<PlayerViewModel> AllPlayers => _allPlayers;
 
-        public PlayersService(IObservableCollection<PlayerEntityProxy> players, GameSettings gameSettings, ICommandProcessor cmd)
+        public PlayersService(IObservableCollection<PlayerEntityProxy> players, GameSettings gameSettings, ICommandProcessor cmd, Subject<PlayerEntityProxy> exitSceneRequest)
         {
             _gameSettings = gameSettings;
             _cmd = cmd;
+            _exitSceneRequest = exitSceneRequest;
 
             foreach (var playerEntity in players)
             {
@@ -45,7 +47,7 @@ namespace Game.MainMenu
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = _gameSettings.Constants.FirstOrDefault(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName)).Value;
+                name = _gameSettings.Constants.FirstOrDefault(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName))?.Value;
             }
             
             var command = new CmdCreatePlayer(name);
@@ -64,7 +66,7 @@ namespace Game.MainMenu
 
         private void CreatePlayerViewModel(PlayerEntityProxy playerEntity)
         {
-            var playerViewModel = new PlayerViewModel(playerEntity ,this);
+            var playerViewModel = new PlayerViewModel(playerEntity ,this, _exitSceneRequest);
             
             _allPlayers.Add(playerViewModel);
             _playersMap[playerEntity.Id] = playerViewModel;

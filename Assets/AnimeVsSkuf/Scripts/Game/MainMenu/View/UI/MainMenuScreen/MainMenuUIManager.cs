@@ -10,16 +10,14 @@ namespace AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.MainMenuScreen
 {
     public class MainMenuUIManager : UIManager
     {
-        private readonly Subject<Unit> _exitSceneRequest;
-
         public MainMenuUIManager(DIContainer container) : base(container)
         {
-            _exitSceneRequest = container.Resolve<Subject<Unit>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
+
         }
         
         public MainMenuScreenViewModel OpenScreenMainMenu()
         {
-            var viewModel = new MainMenuScreenViewModel(this, _exitSceneRequest);
+            var viewModel = new MainMenuScreenViewModel(this);
             var rootUI = Container.Resolve<UIMainMenuRootViewModel>();
 
             rootUI.OpenScreen(viewModel);

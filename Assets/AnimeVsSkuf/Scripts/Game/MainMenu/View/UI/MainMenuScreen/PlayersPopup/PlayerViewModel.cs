@@ -12,21 +12,28 @@ namespace Game.MainMenu
         public readonly int PlayerEntityId;
         public readonly ReadOnlyReactiveProperty<string> Name;
         public readonly ReadOnlyReactiveProperty<int> Level;
+        private readonly Subject<PlayerEntityProxy> _exitSceneRequest;
 
-        public PlayerViewModel(PlayerEntityProxy playerEntity,  PlayersService playersService)
+        public PlayerViewModel(PlayerEntityProxy playerEntity,  PlayersService playersService, Subject<PlayerEntityProxy> exitSceneRequest)
         {
             PlayerEntityId = playerEntity.Id;
             
             _playerEntity = playerEntity;
             _playersService = playersService;
+            _exitSceneRequest = exitSceneRequest;
 
             Name = playerEntity.Name;
             Level = playerEntity.Level;
         }
 
-        public void DeletePlayer()
+        public void RequestDeletePlayer()
         {
             _playersService.DeletePlayer(PlayerEntityId);
+        }
+
+        public void RequestStartGameplay()
+        {
+            _exitSceneRequest.OnNext(_playerEntity);
         }
     }
 }

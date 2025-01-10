@@ -19,14 +19,14 @@ namespace Game
             var gameStateProvider = container.Resolve<IGameStateProvider>();
             var gameState = gameStateProvider.GameState;
             
-            container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<Unit>());
+            container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<PlayerEntityProxy>());
 
             var cmd = new CommandProcessor(gameStateProvider);
             cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState));
             cmd.RegisterHandler(new CmdDeletePlayerHandler(gameState));
             container.RegisterInstance<ICommandProcessor>(cmd);
             
-            container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd)).AsSingle();
+            container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd, container.Resolve<Subject<PlayerEntityProxy>>(AppConstants.EXIT_SCENE_REQUEST_TAG))).AsSingle();
         }
     }
 }

@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _btnDeletePlayer: {fileID: 3388128090709210023}
+  _btnStartGameplay: {fileID: 169049301445225636}
   playerName: {fileID: 5686033220926497805}
   playerLevel: {fileID: 3800542621892419566}
 --- !u!1 &5100885331263820307

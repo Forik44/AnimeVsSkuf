@@ -1,12 +1,14 @@
+using Game.State;
+
 namespace Game
 {
     public class GameplayEnterParams : SceneEnterParams
     {
-        public int LevelNumber;
+        public PlayerEntityProxy Player;
         
-        public GameplayEnterParams(int levelNumber) : base(Scenes.GAMEPLAY)
+        public GameplayEnterParams(PlayerEntityProxy player) : base(Scenes.GAMEPLAY)
         {
-            LevelNumber = levelNumber;
+            Player = player;
         }
     }
 }

@@ -6,13 +6,11 @@ namespace AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.MainMenuScreen
     public class MainMenuScreenViewModel : WindowViewModel
     {
         private readonly MainMenuUIManager _uiManager;
-        private readonly Subject<Unit> _exitSceneRequest;
         public override string Id => "MainMenu/MainMenuScreen";
 
-        public MainMenuScreenViewModel(MainMenuUIManager uiManager, Subject<Unit> exitSceneRequest)
+        public MainMenuScreenViewModel(MainMenuUIManager uiManager)
         {
             _uiManager = uiManager;
-            _exitSceneRequest = exitSceneRequest;
         }
         public void RequestOpenPlayersPopup()
         {

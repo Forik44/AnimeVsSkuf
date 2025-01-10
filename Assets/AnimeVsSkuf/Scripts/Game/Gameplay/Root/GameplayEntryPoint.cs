@@ -22,7 +22,7 @@ namespace Game
             var exitSceneSignalSubject = new Subject<Unit>();
             uiScene.Bind(exitSceneSignalSubject);
             
-            Debug.Log($"GAMEPLAY ENTRY POINT: level = {enterParams.LevelNumber}");
+            Debug.Log($"GAMEPLAY ENTRY POINT: player id = {enterParams.Player?.Id}");
             
             var mainMenuEnterParams = new MainMenuEnterParams("Win");
             var exitParams = new GameplayExitParams(mainMenuEnterParams);

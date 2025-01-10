@@ -23,6 +23,7 @@ namespace Game
 
             var cmd = new CommandProcessor(gameStateProvider);
             cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState));
+            cmd.RegisterHandler(new CmdDeletePlayerHandler(gameState));
             container.RegisterInstance<ICommandProcessor>(cmd);
             
             container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd)).AsSingle();

@@ -5,16 +5,20 @@ using MVVM.UI;
 using ObservableCollections;
 using R3;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.PlayersPopup
 {
-    public class PlayerPopupBinder : PopupBinder<PlayersPopupViewModel>
+    public class PlayersPopupBinder : PopupBinder<PlayersPopupViewModel>
     {
         [SerializeField] private PlayerBinder _prefabPlayer;
         [SerializeField] private Transform _cardContainer;
+        [SerializeField] private Button _btnCreatePlayer;
     
         private readonly Dictionary<int, PlayerBinder> _createdPlayerMap = new();
         private readonly CompositeDisposable _disposables = new();
+        
+        private PlayersPopupViewModel _playersPopupViewModel;
         
         protected override void OnBind(PlayersPopupViewModel viewModel)
         {
@@ -29,10 +33,26 @@ namespace AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.PlayersPopup
             _disposables.Add(viewModel.AllPlayers.ObserveRemove()
                 .Subscribe(e => DeletePlayer(e.Value)));
 
+            _playersPopupViewModel = viewModel;
+        }
+        
+        protected virtual void Start()
+        {
+            base.Start();
+            
+            _btnCreatePlayer?.onClick.AddListener(OnCreatePlayerClick);
+        }
+        
+        protected void OnCreatePlayerClick()
+        {
+            _playersPopupViewModel.CreatePlayer();
         }
 
         private void OnDestroy()
         {
+            base.OnDestroy();
+            
+            _btnCreatePlayer?.onClick.RemoveListener(OnCreatePlayerClick);
             _disposables.Dispose();
         }
 

@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b7121babf24cf197734451a8c92ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _btnDeletePlayer: {fileID: 3388128090709210023}
   playerName: {fileID: 5686033220926497805}
   playerLevel: {fileID: 3800542621892419566}
 --- !u!1 &5100885331263820307

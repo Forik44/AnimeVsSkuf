@@ -41,8 +41,13 @@ namespace Game.MainMenu
             });
         }
         
-        public bool CreatePlayer(string name)
+        public bool CreatePlayer(string name = null)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = _gameSettings.Constants.FirstOrDefault(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName)).Value;
+            }
+            
             var command = new CmdCreatePlayer(name);
             var result = _cmd.Process(command);
 
@@ -51,13 +56,15 @@ namespace Game.MainMenu
 
         public bool DeletePlayer(int playerEntityId)
         {
-            throw new NotImplementedException();
+            var command = new CmdDeletePlayer(playerEntityId);
+            var result = _cmd.Process(command);
+            
+            return result;
         }
 
         private void CreatePlayerViewModel(PlayerEntityProxy playerEntity)
         {
-            var defaultName = _gameSettings.Constants.FirstOrDefault(e => e.Id == ConstantsConverter.GetConstantByType(ConstantsType.DefaultPlayerName));
-            var playerViewModel = new PlayerViewModel(playerEntity, defaultName.Value ,this);
+            var playerViewModel = new PlayerViewModel(playerEntity ,this);
             
             _allPlayers.Add(playerViewModel);
             _playersMap[playerEntity.Id] = playerViewModel;

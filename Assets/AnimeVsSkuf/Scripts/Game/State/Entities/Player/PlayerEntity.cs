@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Game.State.GameResources;
 
 namespace Game.State
 {
@@ -7,5 +9,6 @@ namespace Game.State
     {
         public string Name;
         public int Level;
+        public List<ResourceData> Resources;
     }
 }

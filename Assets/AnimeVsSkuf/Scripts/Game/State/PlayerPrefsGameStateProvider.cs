@@ -1,4 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
+using AnimeVsSkuf.Scripts.Game.Settings;
+using Game.State.GameResources;
+using GoogleSpreadsheets;
 using R3;
 using UnityEngine;
 
@@ -9,11 +13,14 @@ namespace Game.State
         private const string GAME_STATE_KEY = nameof(GAME_STATE_KEY);
         
         public GameStateProxy GameState { get; private set; }
-
+        
+        private GameSettings _gameSettings;
         private GameState _gameStateOrigin;
         
-        public Observable<GameStateProxy> LoadGameState()
+        public Observable<GameStateProxy> LoadGameState(GameSettingsProvider gameSettingsProvider)
         {
+            _gameSettings = gameSettingsProvider.GameSettings;
+            
             if (!PlayerPrefs.HasKey(GAME_STATE_KEY))
             {
                 GameState = CreateGameStateFromSettings();
@@ -54,21 +61,7 @@ namespace Game.State
             //TODO: Подтягивать из настроек
             _gameStateOrigin = new GameState
             {
-                Players = new List<PlayerEntity>
-                {
-                    new()
-                    {
-                        Id = 0,
-                        Name = "Egor",
-                        Level = 4
-                    },
-                    new()
-                    {
-                        Id = 1,
-                        Name = "Leonardo",
-                        Level = 3
-                    }
-                }
+                Players = new List<PlayerEntity>()
             };
             
             return new GameStateProxy(_gameStateOrigin);

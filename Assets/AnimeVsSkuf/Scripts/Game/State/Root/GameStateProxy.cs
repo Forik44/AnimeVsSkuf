@@ -1,4 +1,5 @@
 using System.Linq;
+using Game.State.GameResources;
 using ObservableCollections;
 using R3;
 
@@ -12,6 +13,17 @@ namespace Game.State
         public GameStateProxy(GameState gameState)
         {
             _gameState = gameState;
+            
+            InitPlayers(gameState);
+        }
+
+        public int CreatePlayerId()
+        {
+            return _gameState.CreatePlayerId();
+        }
+
+        private void InitPlayers(GameState gameState)
+        {
             gameState.Players.ForEach(player => Players.Add(new PlayerEntityProxy(player)));
             
             Players.ObserveAdd().Subscribe(e =>
@@ -27,11 +39,6 @@ namespace Game.State
                     gameState.Players.FirstOrDefault(player => player.Id == removedPlayerEntityProxy.Id);
                 gameState.Players.Remove(removedPlayerEntity);
             });
-        }
-
-        public int CreatePlayerId()
-        {
-            return _gameState.CreatePlayerId();
         }
     }
 }

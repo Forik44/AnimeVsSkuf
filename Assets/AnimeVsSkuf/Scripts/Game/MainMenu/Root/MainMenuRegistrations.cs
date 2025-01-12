@@ -22,7 +22,7 @@ namespace Game
             container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<PlayerEntityProxy>());
 
             var cmd = new CommandProcessor(gameStateProvider);
-            cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState));
+            cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState, gameSettings));
             cmd.RegisterHandler(new CmdDeletePlayerHandler(gameState));
             container.RegisterInstance<ICommandProcessor>(cmd);
             

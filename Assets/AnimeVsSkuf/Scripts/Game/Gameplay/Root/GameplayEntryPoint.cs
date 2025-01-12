@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using AnimeVsSkuf.Scripts.Game.Common;
 using DI;
 using R3;
 
@@ -15,20 +16,30 @@ namespace Game
             var gameplayViewModelsContainer = new DIContainer(gameplayContainer);
             GameplayViewModelsRegistrations.Register(gameplayViewModelsContainer);
             
-            var uiRoot = gameplayContainer.Resolve<UIRootView>();
-            var uiScene = Instantiate(_sceneUIRootPrefab);
-            uiRoot.AttachSceneUI(uiScene.gameObject);
-            
-            var exitSceneSignalSubject = new Subject<Unit>();
-            uiScene.Bind(exitSceneSignalSubject);
+            InitUI(gameplayViewModelsContainer);
             
             Debug.Log($"GAMEPLAY ENTRY POINT: player id = {enterParams.Player?.Id}");
             
+            var exitSignalSubject = gameplayContainer.Resolve<Subject<Unit>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
+            
             var mainMenuEnterParams = new MainMenuEnterParams("Win");
             var exitParams = new GameplayExitParams(mainMenuEnterParams);
-            var exitToMainMenuSceneSignal = exitSceneSignalSubject.Select(_ => exitParams);
+            var exitToMainMenuSceneSignal = exitSignalSubject .Select(_ => exitParams);
 
             return exitToMainMenuSceneSignal;
+        }
+        
+        private void InitUI(DIContainer viewsContainer)
+        {
+            var uiRoot = viewsContainer.Resolve<UIRootView>();
+            var uiSceneRootBinder = Instantiate(_sceneUIRootPrefab);
+            uiRoot.AttachSceneUI(uiSceneRootBinder.gameObject);
+
+            var uiSceneRootViewModel = viewsContainer.Resolve<UIGameplayRootViewModel>();
+            uiSceneRootBinder.Bind(uiSceneRootViewModel);
+
+            var uiManager = viewsContainer.Resolve<GameplayUIManager>();
+            uiManager.OpenScreenGameplay();
         }
     }
 }

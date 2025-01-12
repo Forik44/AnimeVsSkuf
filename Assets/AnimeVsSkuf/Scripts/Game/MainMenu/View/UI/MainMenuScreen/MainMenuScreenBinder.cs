@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.MainMenuScreen
 {
-    public class MainMenuBinder : WindowBinder<MainMenuScreenViewModel>
+    public class MainMenuScreenBinder : WindowBinder<MainMenuScreenViewModel>
     {
         [SerializeField] private Button _btnOpenPlayersPopup;
 

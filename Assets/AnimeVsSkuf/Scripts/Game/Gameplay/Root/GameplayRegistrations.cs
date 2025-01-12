@@ -1,11 +1,11 @@
-using System.Linq;
+using AnimeVsSkuf.Scripts.Game.Common;
 using AnimeVsSkuf.Scripts.Game.Gameplay.Commands.Handlers;
 using AnimeVsSkuf.Scripts.Game.Gameplay.Services;
 using AnimeVsSkuf.Scripts.Game.Settings;
 using DI;
-using Game.Gameplay;
 using Game.State;
 using Game.State.CMD;
+using R3;
 
 namespace Game
 {
@@ -20,6 +20,8 @@ namespace Game
             var gameState = gameStateProvider.GameState;
             
             var player = gameplayEnterParams.Player;
+            
+            container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<Unit>());
             
             var cmd = new CommandProcessor(gameStateProvider);
             cmd.RegisterHandler(new CmdResourcesAddHandler(player));

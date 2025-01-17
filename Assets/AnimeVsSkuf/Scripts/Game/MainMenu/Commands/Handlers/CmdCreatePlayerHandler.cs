@@ -25,6 +25,7 @@ namespace Game.Gameplay
                 Id = playerId,
                 Name = command.Name,
                 Level = command.Level,
+                Day = command.Day,
                 Resources = new List<ResourceData>
                 {
                     new() {ResourceType = ResourceType.Money, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.DefaultResourceMoney))},

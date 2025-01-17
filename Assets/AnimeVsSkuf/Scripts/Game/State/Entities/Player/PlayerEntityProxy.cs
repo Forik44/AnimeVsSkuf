@@ -11,6 +11,7 @@ namespace Game.State
         public int Id { get; }
         public ReactiveProperty<string> Name { get; }
         public ReactiveProperty<int> Level { get; }
+        public ReactiveProperty<int> Day { get; }
         public ObservableList<Resource> Resources { get; } = new();
         
         public PlayerEntity Origin { get; }
@@ -21,6 +22,7 @@ namespace Game.State
             
             Name = new ReactiveProperty<string>(playerEntity.Name);
             Level = new ReactiveProperty<int>(playerEntity.Level);
+            Day = new ReactiveProperty<int>(playerEntity.Day);
             
             InitResources(playerEntity);
             
@@ -28,6 +30,7 @@ namespace Game.State
             
             Name.Skip(1).Subscribe(value => playerEntity.Name = value);
             Level.Skip(1).Subscribe(value => playerEntity.Level = value);
+            Day.Skip(1).Subscribe(value => playerEntity.Day = value);
         }
         
         private void InitResources(PlayerEntity playerEntity)

@@ -9,6 +9,7 @@ namespace Game.State
     {
         public string Name;
         public int Level;
+        public int Day;
         public List<ResourceData> Resources;
     }
 }

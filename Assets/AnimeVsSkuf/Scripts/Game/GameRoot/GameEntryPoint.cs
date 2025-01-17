@@ -57,7 +57,8 @@ namespace Game
                 {
                     Name = "Default",
                     Id = -1,
-                    Level = 1
+                    Level = 1,
+                    Day = 1
                 };
                 var defaultPlayer = new PlayerEntityProxy(defaultPlayerEntity);
                 var enterParams = new GameplayEnterParams(defaultPlayer);

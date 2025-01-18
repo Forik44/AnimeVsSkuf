@@ -24,16 +24,23 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
             resources.ObserveRemove().Subscribe(e => RemoveResourceViewModel(e.Value));
         }
 
-        public bool AddResource(ResourceType resourceType, int amount)
+        public bool AddResource(ResourceType resourceType, int amount, bool canClamp = true)
         {
-            var command = new CmdResourcesAdd(resourceType, amount);
+            var command = new CmdResourcesAdd(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
         }
         
-        public bool TrySpendResource(ResourceType resourceType, int amount)
+        public bool TrySpendResource(ResourceType resourceType, int amount, bool canClamp = false)
         {
-            var command = new CmdResourcesSpend(resourceType, amount);
+            var command = new CmdResourcesSpend(resourceType, amount, canClamp);
+            
+            return _cmd.Process(command);
+        }
+        
+        public bool SetResource(ResourceType resourceType, int amount, bool canClamp = false)
+        {
+            var command = new CmdResourcesSet(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AnimeVsSkuf.Scripts.Game.Gameplay.Services;
 using AnimeVsSkuf.Scripts.Game.Settings;
 using Game.Gameplay;
 using Game.State;
@@ -15,13 +16,13 @@ namespace Game.MainMenu
     {
         private readonly GameSettings _gameSettings;
         private readonly ICommandProcessor _cmd;
-        private readonly Subject<PlayerEntityProxy> _exitSceneRequest;
+        private readonly Subject<int> _exitSceneRequest;
         private readonly ObservableList<PlayerViewModel> _allPlayers = new();
         private readonly Dictionary<int, PlayerViewModel> _playersMap = new();
 
         public IObservableCollection<PlayerViewModel> AllPlayers => _allPlayers;
 
-        public PlayersService(IObservableCollection<PlayerEntityProxy> players, GameSettings gameSettings, ICommandProcessor cmd, Subject<PlayerEntityProxy> exitSceneRequest)
+        public PlayersService(IObservableCollection<PlayerEntityProxy> players, GameSettings gameSettings, ICommandProcessor cmd, Subject<int> exitSceneRequest)
         {
             _gameSettings = gameSettings;
             _cmd = cmd;
@@ -61,6 +62,14 @@ namespace Game.MainMenu
             var command = new CmdDeletePlayer(playerEntityId);
             var result = _cmd.Process(command);
             
+            return result;
+        }
+
+        public bool StartNextDay()
+        {
+            var command = new CmdStartNewDay();
+            var result = _cmd.Process(command);
+
             return result;
         }
 

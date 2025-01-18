@@ -1,4 +1,5 @@
 using AnimeVsSkuf.Scripts.Game.Common;
+using AnimeVsSkuf.Scripts.Game.Gameplay.Services;
 using AnimeVsSkuf.Scripts.Game.Settings;
 using DI;
 using Game.Gameplay;
@@ -19,14 +20,14 @@ namespace Game
             var gameStateProvider = container.Resolve<IGameStateProvider>();
             var gameState = gameStateProvider.GameState;
             
-            container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<PlayerEntityProxy>());
+            container.RegisterInstance(AppConstants.EXIT_SCENE_REQUEST_TAG,new Subject<int>());
 
             var cmd = new CommandProcessor(gameStateProvider);
             cmd.RegisterHandler(new CmdCreatePlayerHandler(gameState, gameSettings));
             cmd.RegisterHandler(new CmdDeletePlayerHandler(gameState));
             container.RegisterInstance<ICommandProcessor>(cmd);
             
-            container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd, container.Resolve<Subject<PlayerEntityProxy>>(AppConstants.EXIT_SCENE_REQUEST_TAG))).AsSingle();
+            container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd, container.Resolve<Subject<int>>(AppConstants.EXIT_SCENE_REQUEST_TAG))).AsSingle();
         }
     }
 }

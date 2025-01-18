@@ -7,11 +7,13 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Commands
     {
         public readonly ResourceType ResourceType;
         public readonly int Amount;
+        public readonly bool CanClamp;
 
-        public CmdResourcesAdd(ResourceType resourceType, int amount)
+        public CmdResourcesAdd(ResourceType resourceType, int amount, bool canClamp)
         {
             ResourceType = resourceType;
             Amount = amount;
+            CanClamp = canClamp;
         }
     }
 }

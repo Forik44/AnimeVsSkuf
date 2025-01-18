@@ -4,6 +4,8 @@ namespace Game.State.GameResources
     {
         Weight,
         Money,
-        Weariness
+        Tonus,
+        Energy,
+        DayEnergy
     }
 }

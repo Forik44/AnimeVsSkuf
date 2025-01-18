@@ -28,9 +28,11 @@ namespace Game.Gameplay
                 Day = command.Day,
                 Resources = new List<ResourceData>
                 {
-                    new() {ResourceType = ResourceType.Money, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.DefaultResourceMoney))},
-                    new() {ResourceType = ResourceType.Weariness, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.DefaultResourceWeariness))},
-                    new() {ResourceType = ResourceType.Weight, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.DefaultResourceWeight))},
+                    new() {ResourceType = ResourceType.Money, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultMoney)), MinValue = 0, MaxValue = int.MaxValue},
+                    new() {ResourceType = ResourceType.Weight, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultWeight)), MinValue = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceMinWeight)), MaxValue = int.MaxValue},
+                    new() {ResourceType = ResourceType.Tonus, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultTonus)), MinValue = int.MinValue, MaxValue = int.MaxValue},
+                    new() {ResourceType = ResourceType.Energy, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultEnergy)), MinValue = 0, MaxValue = int.MaxValue},
+                    new() {ResourceType = ResourceType.DayEnergy, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultDayEnergy)), MinValue = 0, MaxValue = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceMaxDayEnergy))},
                 }
             };
             

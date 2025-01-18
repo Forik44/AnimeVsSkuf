@@ -7,13 +7,21 @@ namespace GoogleSpreadsheets
             switch (constantTypeType)
             {
                 case ConstantsType.DefaultPlayerName:
-                    return "default_player_name";
-                case ConstantsType.DefaultResourceMoney:
-                    return "default_resource_money";
-                case ConstantsType.DefaultResourceWeight:
-                    return "default_resource_weight";
-                case ConstantsType.DefaultResourceWeariness:
-                    return "default_resource_weariness";
+                    return "player_default_name";
+                case ConstantsType.ResourceDefaultMoney:
+                    return "resource_default_money";
+                case ConstantsType.ResourceDefaultWeight:
+                    return "resource_default_weight";
+                case ConstantsType.ResourceDefaultTonus:
+                    return "resource_default_tonus";
+                case ConstantsType.ResourceDefaultEnergy:
+                    return "resource_default_energy";
+                case ConstantsType.ResourceDefaultDayEnergy:
+                    return "resource_default_day_energy";
+                case ConstantsType.ResourceMinWeight:
+                    return "resource_min_weight";
+                case ConstantsType.ResourceMaxDayEnergy:
+                    return "resource_max_day_energy";
                 
                 default:
                     return "";
@@ -23,8 +31,12 @@ namespace GoogleSpreadsheets
     public enum ConstantsType
     {
         DefaultPlayerName,
-        DefaultResourceMoney,
-        DefaultResourceWeight,
-        DefaultResourceWeariness
+        ResourceDefaultMoney,
+        ResourceDefaultWeight,
+        ResourceDefaultTonus,
+        ResourceDefaultEnergy,
+        ResourceDefaultDayEnergy,
+        ResourceMinWeight,
+        ResourceMaxDayEnergy
     }
 }

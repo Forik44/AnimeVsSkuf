@@ -26,12 +26,12 @@ namespace Game
             
             Debug.Log($"MAIN MENU ENTRY POINT: Run main menu scene. Results: {enterParams?.Result}");
         
-            var gameplayEnterParams = new GameplayEnterParams(_player);
+            var gameplayEnterParams = new GameplayEnterParams(0);
             var mainMenuExitParams = new MainMenuExitParams(gameplayEnterParams);
             
-            var exitSignalSubject = mainMenuContainer.Resolve<Subject<PlayerEntityProxy>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
-            exitSignalSubject.Subscribe(player => 
-                gameplayEnterParams.Player = player
+            var exitSignalSubject = mainMenuContainer.Resolve<Subject<int>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
+            exitSignalSubject.Subscribe(playerId => 
+                gameplayEnterParams.PlayerId = playerId
                 );
             
             var exitToGameplaySceneSignal = exitSignalSubject.Select(_ => mainMenuExitParams);

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Game.State;
 using Game.State.CMD;
@@ -23,15 +24,24 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Commands.Handlers
                 Debug.LogError("Trying to spend not existed resource");
                 return false;
             }
-
-            if (requiredResource.Amount.Value < command.Amount)
+            
+            if (command.Amount < 0)
+            {
+                Debug.LogError("Spend resource amount is less than zero");
+                return false;
+            }
+            
+            int minValue = requiredResource.MinValue.CurrentValue;
+            int maxValue = requiredResource.MaxValue.CurrentValue;
+            
+            if (requiredResource.Amount.Value - command.Amount < minValue && !command.CanClamp)
             {
                 Debug.LogError(
-                    $"Trying to spend more resources than existed ({requiredResourceType}). Exists: {requiredResource.Amount.Value}, trying to spend: {command.Amount}");
+                    $"Trying to spend more resources than can ({requiredResourceType}). Exists: {requiredResource.Amount.Value}, trying to spend: {command.Amount}, min:{minValue}");
                 return false;
             }
 
-            requiredResource.Amount.Value -= command.Amount;
+            requiredResource.Amount.Value = Math.Clamp(requiredResource.Amount.Value - command.Amount, minValue, maxValue);
 
             return true;
         }

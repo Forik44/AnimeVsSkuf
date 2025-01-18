@@ -4,11 +4,11 @@ namespace Game
 {
     public class GameplayEnterParams : SceneEnterParams
     {
-        public PlayerEntityProxy Player;
+        public int PlayerId;
         
-        public GameplayEnterParams(PlayerEntityProxy player) : base(Scenes.GAMEPLAY)
+        public GameplayEnterParams(int playerId) : base(Scenes.GAMEPLAY)
         {
-            Player = player;
+            PlayerId = playerId;
         }
     }
 }

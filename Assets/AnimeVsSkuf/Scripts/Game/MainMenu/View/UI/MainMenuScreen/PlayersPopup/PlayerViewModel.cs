@@ -12,9 +12,9 @@ namespace Game.MainMenu
         public readonly int PlayerEntityId;
         public readonly ReadOnlyReactiveProperty<string> Name;
         public readonly ReadOnlyReactiveProperty<int> Level;
-        private readonly Subject<PlayerEntityProxy> _exitSceneRequest;
+        private readonly Subject<int> _exitSceneRequest;
 
-        public PlayerViewModel(PlayerEntityProxy playerEntity,  PlayersService playersService, Subject<PlayerEntityProxy> exitSceneRequest)
+        public PlayerViewModel(PlayerEntityProxy playerEntity,  PlayersService playersService, Subject<int> exitSceneRequest)
         {
             PlayerEntityId = playerEntity.Id;
             
@@ -33,7 +33,7 @@ namespace Game.MainMenu
 
         public void RequestStartGameplay()
         {
-            _exitSceneRequest.OnNext(_playerEntity);
+            _exitSceneRequest.OnNext(_playerEntity.Id);
         }
     }
 }

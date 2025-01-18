@@ -1,4 +1,6 @@
 using AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.MainMenuScreen;
+using Game.MainMenu;
+using Game.State;
 using MVVM.UI;
 using R3;
 
@@ -9,17 +11,26 @@ namespace Game
         public override string Id => "Gameplay/GameplayScreen";
         
         private readonly GameplayUIManager _uiManager;
-        private readonly Subject<Unit> _exitSceneRequest;
+        private readonly Subject<int> _exitSceneRequest;
+        private readonly PlayerEntityProxy _player;
+        private readonly PlayersService _playersService;
 
-        public GameplayScreenViewModel(GameplayUIManager uiManager, Subject<Unit> exitSceneRequest)
+        public GameplayScreenViewModel(GameplayUIManager uiManager, Subject<int> exitSceneRequest, PlayerEntityProxy player, PlayersService playersService)
         {
             _uiManager = uiManager;
             _exitSceneRequest = exitSceneRequest;
-            _exitSceneRequest = exitSceneRequest;
+            _player = player;
+            _playersService = playersService;
         }
+
         public void RequestGoToMainMenu()
         {
-            _exitSceneRequest.OnNext(Unit.Default);
+            _exitSceneRequest.OnNext(_player.Id);
+        }
+
+        public void RequestNextDay()
+        {
+            _playersService.StartNextDay();
         }
     }
 }

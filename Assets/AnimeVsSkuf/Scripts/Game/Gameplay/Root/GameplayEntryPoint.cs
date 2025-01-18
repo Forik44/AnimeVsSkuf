@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using AnimeVsSkuf.Scripts.Game.Common;
 using DI;
+using Game.State;
 using R3;
 
 namespace Game
@@ -18,9 +19,9 @@ namespace Game
             
             InitUI(gameplayViewModelsContainer);
             
-            Debug.Log($"GAMEPLAY ENTRY POINT: player id = {enterParams.Player?.Id}");
+            Debug.Log($"GAMEPLAY ENTRY POINT: player id = {enterParams.PlayerId}");
             
-            var exitSignalSubject = gameplayContainer.Resolve<Subject<Unit>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
+            var exitSignalSubject = gameplayContainer.Resolve<Subject<int>>(AppConstants.EXIT_SCENE_REQUEST_TAG);
             
             var mainMenuEnterParams = new MainMenuEnterParams("Win");
             var exitParams = new GameplayExitParams(mainMenuEnterParams);

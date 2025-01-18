@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 4395593626434364743}
   - component: {fileID: 1141069374246635762}
   m_Layer: 0
-  m_Name: ButtonPopupB
+  m_Name: ButtonNextDay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,6 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _btnGoToMainMenu: {fileID: 9078986650793283205}
+  _btnNextDay: {fileID: 1141069374246635762}
 --- !u!1 &4046687437308507472
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,7 +704,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Popup B
+  m_text: NextDay
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

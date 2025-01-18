@@ -53,15 +53,7 @@ namespace Game
 
             if (sceneName == Scenes.GAMEPLAY)
             {
-                var defaultPlayerEntity = new PlayerEntity
-                {
-                    Name = "Default",
-                    Id = -1,
-                    Level = 1,
-                    Day = 1
-                };
-                var defaultPlayer = new PlayerEntityProxy(defaultPlayerEntity);
-                var enterParams = new GameplayEnterParams(defaultPlayer);
+                var enterParams = new GameplayEnterParams(0);
                 
                 _coroutines.StartCoroutine(LoadAndStartGameplay(enterParams));
                 return;

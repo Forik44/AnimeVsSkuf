@@ -26,6 +26,7 @@ namespace Game.Gameplay
                 Name = command.Name,
                 Level = command.Level,
                 Day = command.Day,
+                LevelUpgrades = _gameSettings.GetLevelUpgradesList(),
                 Resources = new List<ResourceData>
                 {
                     new() {ResourceType = ResourceType.Money, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultMoney)), MinValue = 0, MaxValue = int.MaxValue},

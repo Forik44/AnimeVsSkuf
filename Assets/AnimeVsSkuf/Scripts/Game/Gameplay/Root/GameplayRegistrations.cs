@@ -35,7 +35,7 @@ namespace Game
             container.RegisterInstance<ICommandProcessor>(cmd);
             
             container.RegisterFactory(_ => new ResourcesService(player.Resources, cmd)).AsSingle();
-            cmd.RegisterHandler(new CmdStartNewDayHandler(player, container.Resolve<ResourcesService>()));
+            cmd.RegisterHandler(new CmdStartNewDayHandler(player, container.Resolve<ResourcesService>(), gameSettings));
             
             container.RegisterFactory(_ => new PlayersService(gameState.Players, gameSettings, cmd, container.Resolve<Subject<int>>(AppConstants.EXIT_SCENE_REQUEST_TAG))).AsSingle();
         }

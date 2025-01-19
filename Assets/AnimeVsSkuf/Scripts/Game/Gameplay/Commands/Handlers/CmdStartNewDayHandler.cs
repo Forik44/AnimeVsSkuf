@@ -1,8 +1,10 @@
 using System.Linq;
 using AnimeVsSkuf.Scripts.Game.Gameplay.Services;
+using AnimeVsSkuf.Scripts.Game.Settings;
 using Game.State;
 using Game.State.CMD;
 using Game.State.GameResources;
+using GoogleSpreadsheets;
 using UnityEngine;
 
 namespace Game.Gameplay
@@ -12,15 +14,18 @@ namespace Game.Gameplay
         private readonly PlayerEntityProxy _player;
         
         private ResourcesService _resourcesService;
+        private readonly GameSettings _gameSettings;
 
-        public CmdStartNewDayHandler(PlayerEntityProxy player, ResourcesService resourcesService)
+        public CmdStartNewDayHandler(PlayerEntityProxy player, ResourcesService resourcesService, GameSettings gameSettings)
         {
             _player = player;
             _resourcesService = resourcesService;
+            _gameSettings = gameSettings;
         }
         public bool Handle(CmdStartNewDay command)
         {
             _player.Day.Value++;
+            _player.Experience.Value += int.Parse(_gameSettings.GetConstantValue(ConstantsType.DayExperienceIncome));
             
             var tonusResourceType = ResourceType.Tonus;
             var tonusResource = _player.Resources.FirstOrDefault(r => r.ResourceType == tonusResourceType);

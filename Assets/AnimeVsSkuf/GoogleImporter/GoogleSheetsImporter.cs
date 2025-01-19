@@ -77,6 +77,7 @@ namespace GoogleSpreadsheets
                     }
                 }
                 
+                _headers.Clear();
                 Debug.Log($"Sheet parsed successfully.");
             }
             else

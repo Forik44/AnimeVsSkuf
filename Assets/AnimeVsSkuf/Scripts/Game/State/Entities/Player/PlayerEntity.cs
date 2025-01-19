@@ -9,6 +9,8 @@ namespace Game.State
     {
         public string Name;
         public int Level;
+        public int Experience;
+        public List<int> LevelUpgrades;
         public int Day;
         public List<ResourceData> Resources;
     }

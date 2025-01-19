@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using AnimeVsSkuf.Scripts.Game.Settings;
+using GoogleSpreadsheets.LevelUpgrades;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
@@ -13,7 +14,8 @@ namespace GoogleSpreadsheets
         public static readonly string CONFIGS_PATH = "Assets/Configs";
         
         private const string SPREADSHEET_ID = "1j5-xIGQ0GknTrKwmKHqufH5SM90RyK2uajweyTd9SYQ";
-        private const string ITEMS_SHEETS_NAME = "Constants";
+        private const string CONSTANTS_SHEETS_NAME = "Constants";
+        private const string LEVELUPGRADES_SHEETS_NAME = "LevelUpgrades";
         private const string CREDENTIALS_PATH = "forikcorp-0ceef761658c.json";
         
         [MenuItem("ForikCorp/Import Configs")]
@@ -23,7 +25,10 @@ namespace GoogleSpreadsheets
             var gameSettings = LoadSettings();
             
             var constantsParser = new ConstantsParser(gameSettings);
-            await sheetsImporter.DownloadAndParseSheet(ITEMS_SHEETS_NAME, constantsParser);
+            await sheetsImporter.DownloadAndParseSheet(CONSTANTS_SHEETS_NAME, constantsParser);
+            
+            var levelUpgradesParser = new LevelUpgradesParser(gameSettings);
+            await sheetsImporter.DownloadAndParseSheet(LEVELUPGRADES_SHEETS_NAME, levelUpgradesParser);
 
             SaveSettings(gameSettings);
         }

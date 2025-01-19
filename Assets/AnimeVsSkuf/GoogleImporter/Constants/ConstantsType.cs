@@ -22,6 +22,8 @@ namespace GoogleSpreadsheets
                     return "resource_min_weight";
                 case ConstantsType.ResourceMaxDayEnergy:
                     return "resource_max_day_energy";
+                case ConstantsType.DayExperienceIncome:
+                    return "day_experience_income";
                 
                 default:
                     return "";
@@ -37,6 +39,7 @@ namespace GoogleSpreadsheets
         ResourceDefaultEnergy,
         ResourceDefaultDayEnergy,
         ResourceMinWeight,
-        ResourceMaxDayEnergy
+        ResourceMaxDayEnergy,
+        DayExperienceIncome,
     }
 }

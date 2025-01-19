@@ -9,6 +9,7 @@ namespace Game
     public class GameplayScreenViewModel : WindowViewModel
     {
         public override string Id => "Gameplay/GameplayScreen";
+        public readonly ReadOnlyReactiveProperty<int> Level;
         
         private readonly GameplayUIManager _uiManager;
         private readonly Subject<int> _exitSceneRequest;
@@ -17,6 +18,8 @@ namespace Game
 
         public GameplayScreenViewModel(GameplayUIManager uiManager, Subject<int> exitSceneRequest, PlayerEntityProxy player, PlayersService playersService)
         {
+            Level = player.Level;
+            
             _uiManager = uiManager;
             _exitSceneRequest = exitSceneRequest;
             _player = player;

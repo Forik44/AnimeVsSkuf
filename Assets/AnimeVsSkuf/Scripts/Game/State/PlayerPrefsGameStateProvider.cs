@@ -3,6 +3,7 @@ using System.Linq;
 using AnimeVsSkuf.Scripts.Game.Settings;
 using Game.State.GameResources;
 using GoogleSpreadsheets;
+using Newtonsoft.Json;
 using R3;
 using UnityEngine;
 
@@ -31,7 +32,12 @@ namespace Game.State
             else
             {
                 var json = PlayerPrefs.GetString(GAME_STATE_KEY);
-                _gameStateOrigin = JsonUtility.FromJson<GameState>(json);
+                var settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto
+                };
+                _gameStateOrigin = JsonConvert.DeserializeObject<GameState>(json,settings);
+
                 GameState = new GameStateProxy(_gameStateOrigin);
                 
                 Debug.Log("Game State loaded: " + json);
@@ -42,7 +48,12 @@ namespace Game.State
 
         public Observable<bool> SaveGameState()
         {
-            var json = JsonUtility.ToJson(_gameStateOrigin, true);
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto // Включает сериализацию с указанием типа
+            };
+            var json = JsonConvert.SerializeObject(_gameStateOrigin, settings);
+            
             PlayerPrefs.SetString(GAME_STATE_KEY, json);
             
             return Observable.Return(true);

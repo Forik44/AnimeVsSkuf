@@ -6,6 +6,7 @@ using Game.State.CMD;
 using Game.State.GameResources;
 using ObservableCollections;
 using R3;
+using UnityEngine;
 
 namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
 {
@@ -26,6 +27,7 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
 
         public bool AddResource(ResourceType resourceType, double amount, bool canClamp = true)
         {
+            Debug.Log($"You try add {resourceType} - {amount}");
             var command = new CmdResourcesAdd(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
@@ -33,6 +35,7 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
         
         public bool TrySpendResource(ResourceType resourceType, double amount, bool canClamp = false)
         {
+            Debug.Log($"You try spend {resourceType} - {amount}");
             var command = new CmdResourcesSpend(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
@@ -40,6 +43,7 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
         
         public bool SetResource(ResourceType resourceType, double amount, bool canClamp = false)
         {
+            Debug.Log($"You try set {resourceType} - {amount}");
             var command = new CmdResourcesSet(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
@@ -49,7 +53,7 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
         {
             if (_resourcesMap.TryGetValue(resourceType, out var resourceViewModel))
             {
-                return resourceViewModel.Amount.CurrentValue >= amount;
+                return resourceViewModel.Amount.CurrentValue - resourceViewModel.MinValue.CurrentValue >= amount;
             }
 
             return false;

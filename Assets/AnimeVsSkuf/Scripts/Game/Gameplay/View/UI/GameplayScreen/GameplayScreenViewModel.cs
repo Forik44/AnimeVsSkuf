@@ -10,6 +10,7 @@ namespace Game
     {
         public override string Id => "Gameplay/GameplayScreen";
         public readonly ReadOnlyReactiveProperty<int> Level;
+        public readonly ReadOnlyReactiveProperty<int> Day;
         
         private readonly GameplayUIManager _uiManager;
         private readonly Subject<int> _exitSceneRequest;
@@ -19,6 +20,7 @@ namespace Game
         public GameplayScreenViewModel(GameplayUIManager uiManager, Subject<int> exitSceneRequest, PlayerEntityProxy player, PlayersService playersService)
         {
             Level = player.Level;
+            Day = player.Day;
             
             _uiManager = uiManager;
             _exitSceneRequest = exitSceneRequest;
@@ -34,6 +36,11 @@ namespace Game
         public void RequestNextDay()
         {
             _playersService.StartNextDay();
+        }
+        
+        public void RequestOpenPlayersPopup()
+        {
+            _uiManager.OpenJobsPopup();
         }
     }
 }

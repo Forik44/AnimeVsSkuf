@@ -1,4 +1,7 @@
 using AnimeVsSkuf.Scripts.Game.Common;
+using AnimeVsSkuf.Scripts.Game.Gameplay.Services;
+using AnimeVsSkuf.Scripts.Game.Gameplay.View.Jobs;
+using AnimeVsSkuf.Scripts.Game.MainMenu.View.UI.PlayersPopup;
 using DI;
 using Game.MainMenu;
 using Game.State;
@@ -24,6 +27,16 @@ namespace Game
             rootUI.OpenScreen(viewModel);
 
             return viewModel;
+        }
+        
+        public JobsPopupViewModel OpenJobsPopup()
+        {
+            var jobsPopupViewModel = new JobsPopupViewModel(Container.Resolve<JobsService>());
+            var rootUI = Container.Resolve<UIGameplayRootViewModel>();
+
+            rootUI.OpenPopup(jobsPopupViewModel);
+
+            return jobsPopupViewModel;
         }
     }
 }

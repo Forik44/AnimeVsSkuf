@@ -42,7 +42,7 @@ namespace Game.Gameplay
             }
             else
             {
-                _resourcesService.TrySpendResource(ResourceType.DayEnergy, tonusResource.Amount.Value, true);
+                _resourcesService.TrySpendResource(ResourceType.DayEnergy, -tonusResource.Amount.Value, true);
             }
 
             var resourceDayEnergy = _resourcesService.Resources

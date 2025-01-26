@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Game.State.GameResources;
+using Game.State.Jobs;
 
 namespace Game.State
 {
@@ -13,5 +14,6 @@ namespace Game.State
         public List<int> LevelUpgrades;
         public int Day;
         public List<ResourceData> Resources;
+        public List<JobData> Jobs;
     }
 }

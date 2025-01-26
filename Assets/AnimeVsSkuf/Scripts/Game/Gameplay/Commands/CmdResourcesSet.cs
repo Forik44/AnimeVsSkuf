@@ -6,10 +6,10 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Commands
     public class CmdResourcesSet : ICommand
     {
         public readonly ResourceType ResourceType;
-        public readonly int Amount;
+        public readonly double Amount;
         public readonly bool CanClamp;
 
-        public CmdResourcesSet(ResourceType resourceType, int amount, bool canClamp)
+        public CmdResourcesSet(ResourceType resourceType, double amount, bool canClamp)
         {
             ResourceType = resourceType;
             Amount = amount;

@@ -6,7 +6,7 @@ namespace Game.GameResources
     public class ResourceViewModel
     {
         public readonly ResourceType ResourceType;
-        public readonly ReadOnlyReactiveProperty<int> Amount;
+        public readonly ReadOnlyReactiveProperty<double> Amount;
 
         public ResourceViewModel(Resource resource)
         {

@@ -34,7 +34,8 @@ namespace Game.Gameplay
                     new() {ResourceType = ResourceType.Tonus, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultTonus)), MinValue = int.MinValue, MaxValue = int.MaxValue},
                     new() {ResourceType = ResourceType.Energy, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultEnergy)), MinValue = 0, MaxValue = int.MaxValue},
                     new() {ResourceType = ResourceType.DayEnergy, Amount = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceDefaultDayEnergy)), MinValue = 0, MaxValue = int.Parse(_gameSettings.GetConstantValue(ConstantsType.ResourceMaxDayEnergy))},
-                }
+                },
+                Jobs = _gameSettings.Jobs
             };
             
             var newPlayerEntityProxy = new PlayerEntityProxy(newPlayerEntity);

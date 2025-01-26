@@ -6,7 +6,7 @@ namespace Game.State.GameResources
     public class ResourceData
     {
         public ResourceType ResourceType;
-        public int Amount;
+        public double Amount;
         public int MinValue;
         public int MaxValue;
     }

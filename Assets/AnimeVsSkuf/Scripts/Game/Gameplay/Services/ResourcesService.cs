@@ -24,28 +24,28 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
             resources.ObserveRemove().Subscribe(e => RemoveResourceViewModel(e.Value));
         }
 
-        public bool AddResource(ResourceType resourceType, int amount, bool canClamp = true)
+        public bool AddResource(ResourceType resourceType, double amount, bool canClamp = true)
         {
             var command = new CmdResourcesAdd(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
         }
         
-        public bool TrySpendResource(ResourceType resourceType, int amount, bool canClamp = false)
+        public bool TrySpendResource(ResourceType resourceType, double amount, bool canClamp = false)
         {
             var command = new CmdResourcesSpend(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
         }
         
-        public bool SetResource(ResourceType resourceType, int amount, bool canClamp = false)
+        public bool SetResource(ResourceType resourceType, double amount, bool canClamp = false)
         {
             var command = new CmdResourcesSet(resourceType, amount, canClamp);
             
             return _cmd.Process(command);
         }
 
-        public bool IsEnoughResources(ResourceType resourceType, int amount)
+        public bool IsEnoughResources(ResourceType resourceType, double amount)
         {
             if (_resourcesMap.TryGetValue(resourceType, out var resourceViewModel))
             {
@@ -55,7 +55,7 @@ namespace AnimeVsSkuf.Scripts.Game.Gameplay.Services
             return false;
         }
         
-        public Observable<int> ObserveResource(ResourceType resourceType)
+        public Observable<double> ObserveResource(ResourceType resourceType)
         {
             if (_resourcesMap.TryGetValue(resourceType, out var resourceViewModel))
             {

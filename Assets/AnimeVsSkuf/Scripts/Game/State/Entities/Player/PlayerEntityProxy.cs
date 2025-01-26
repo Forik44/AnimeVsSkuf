@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.State.GameResources;
+using Game.State.Jobs;
 using ObservableCollections;
 using R3;
-using UnityEngine;
 
 namespace Game.State
 {
@@ -16,6 +16,7 @@ namespace Game.State
         public List<int> LevelUpgrades { get; }
         public ReactiveProperty<int> Day { get; }
         public ObservableList<Resource> Resources { get; } = new();
+        public ObservableList<Job> Jobs { get; } = new();
         
         public PlayerEntity Origin { get; }
 
@@ -30,6 +31,7 @@ namespace Game.State
             Day = new ReactiveProperty<int>(playerEntity.Day);
             
             InitResources(playerEntity);
+            InitJobs(playerEntity);
             
             Origin = playerEntity;
             
@@ -75,6 +77,25 @@ namespace Game.State
                 var removedResourceData =
                     playerEntity.Resources.FirstOrDefault(resourceData => resourceData.ResourceType == removedResource.ResourceType);
                 playerEntity.Resources.Remove(removedResourceData);
+            });
+        }
+        
+        private void InitJobs(PlayerEntity playerEntity)
+        {
+            playerEntity.Jobs.ForEach(jobData => Jobs.Add(new Job(jobData)));
+            
+            Jobs.ObserveAdd().Subscribe(e =>
+            {
+                var addedJob = e.Value;
+                playerEntity.Jobs.Add(addedJob.Origin);
+            });
+
+            Jobs.ObserveRemove().Subscribe(e =>
+            {
+                var removedJob = e.Value;
+                var removedJobData =
+                    playerEntity.Jobs.FirstOrDefault(jobData => jobData.Id == removedJob.Id);
+                playerEntity.Jobs.Remove(removedJobData);
             });
         }
     }

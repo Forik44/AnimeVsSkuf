@@ -5,7 +5,7 @@ namespace Game.State.GameResources
     public class Resource
     {
         public readonly ResourceData Origin;
-        public readonly ReactiveProperty<int> Amount;
+        public readonly ReactiveProperty<double> Amount;
         public readonly ReadOnlyReactiveProperty<int> MinValue;
         public readonly ReadOnlyReactiveProperty<int> MaxValue;
         
@@ -14,7 +14,7 @@ namespace Game.State.GameResources
         public Resource(ResourceData data)
         {
             Origin = data;
-            Amount = new ReactiveProperty<int>(data.Amount);
+            Amount = new ReactiveProperty<double>(data.Amount);
             MinValue = new ReactiveProperty<int>(data.MinValue);
             MaxValue = new ReactiveProperty<int>(data.MaxValue);
             
